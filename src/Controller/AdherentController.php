@@ -26,7 +26,7 @@ class AdherentController extends Controller
         
         $repository = $this->getDoctrine()->getRepository(Adherent::class);
         $adherents = $repository->findAll();
-        return $this->render('adherent/index.html.twig', array('adherents' => $adherents));
+        return $this->render('Adherent/index.html.twig', array('adherents' => $adherents));
     }
 
     /**
@@ -163,10 +163,10 @@ class AdherentController extends Controller
                 'L adhérent à bien été ajouté !'
             );
 
-            return $this->render('adherent/voir.html.twig', array('adherent' => $adherent));
+            return $this->render('Adherent/voir.html.twig', array('adherent' => $adherent));
         }
 
-        return $this->render('adherent/creer.html.twig', array(
+        return $this->render('Adherent/creer.html.twig', array(
             'form' => $form->createView(),
         ));
     }
@@ -221,10 +221,10 @@ class AdherentController extends Controller
                 'L adhérent à bien été modifié !'
             );
 
-            return $this->render('adherent/voir.html.twig', array('adherent' => $adherent));
+            return $this->render('Adherent/voir.html.twig', array('adherent' => $adherent));
         }
 
-        return $this->render('adherent/edit.html.twig', array(
+        return $this->render('Adherent/edit.html.twig', array(
             'form' => $form->createView(),
         ));
     }
@@ -244,7 +244,7 @@ class AdherentController extends Controller
             );
         }
 
-        return $this->render('adherent/voir.html.twig', array('adherent' => $adherent, 'passages' => $passages));
+        return $this->render('Adherent/voir.html.twig', array('adherent' => $adherent, 'passages' => $passages));
     }
 
 }
