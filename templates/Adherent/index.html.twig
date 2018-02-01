@@ -1,0 +1,95 @@
+{# templates/adherent/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des adhérents{% endblock %}
+
+{% block body %}
+    <h2>Liste des adhérents</h2>
+    {% for label, messages in app.flashes %}
+	    {% for message in messages %}
+	        <div id="success-alert" class="alert alert-{{ label }}" role="alert">
+	            {{ message }}
+	        </div>
+	    {% endfor %}
+	{% endfor %}
+    <div class="table-responsive">
+        <table id="example" class="table table-striped table-hover">
+	        <thead>
+	            <tr>
+	            	<th scope="col">N° Distribution</th>
+	                <th scope="col">Nom</th>
+	                <th scope="col">Prénom</th>
+	                <th scope="col">N° Carte étudiante</th>
+	                <th scope="col">Date de création</th>
+	                <th scope="col">Ordre</th>
+	                <th scope="col">Passages</th>
+	                <th scope="col">Actions</th>
+	            </tr>
+	        </thead>
+	        <tbody>
+	            {% for adherent in adherents %}
+	            	{% if adherent.CheckPassage %}
+	            		<tr>
+	            	{% else %}
+	            		<tr class="table-danger">
+			        {% endif %}				
+			        
+			        	<td scope="row" class="align-middle">{{ adherent.iddistri }}</td>
+			        	<td>{{ adherent.nom }}</td>
+			        	<td>{{ adherent.prenom }}</td>
+			        	<td>{{ adherent.idcarte }}</td>
+			        	<td>{{ adherent.datecreation|date('d/m/Y') }}</td>
+			        	<td><i data-feather="{{ adherent.ordrePassage }}"></i></td>
+			        	<td>{{ adherent.getNbPassage }}</td>
+			        	<td>
+			        		<a href="{{ path('VoirAdherent', {'id': adherent.id }) }}"><i data-feather="edit"></i></a>&nbsp;&nbsp;
+			        		{% if adherent.CheckPassage %}
+			        		<a href="{{ path('ajouterPassage', {'adherent': adherent.id, 'user': app.user.id }) }}"><i data-feather="plus-circle"></i></a>
+			        		{% endif %}	
+			        	</td>
+			        </tr>
+			    {% else %}
+			        Pas d adherent !
+			    {% endfor %}
+	        </tbody>
+	    </table>
+      </div>
+
+{% endblock %}
+
+{% block javascripts %}
+	<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript">
+			$(document).ready(function() 
+			{
+				$('#example').DataTable( {
+			        "info":     false,
+			        "language": {
+					    
+							"sProcessing":     "Traitement en cours...",
+							"sSearch":         "Rechercher&nbsp;:",
+						    "sLengthMenu":     "Afficher _MENU_ &eacute;l&eacute;ments",
+							"sInfo":           "Affichage de l'&eacute;l&eacute;ment _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
+							"sInfoEmpty":      "Affichage de l'&eacute;l&eacute;ment 0 &agrave; 0 sur 0 &eacute;l&eacute;ment",
+							"sInfoFiltered":   "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
+							"sInfoPostFix":    "",
+							"sLoadingRecords": "Chargement en cours...",
+						    "sZeroRecords":    "Aucun &eacute;l&eacute;ment &agrave; afficher",
+							"sEmptyTable":     "Aucune donn&eacute;e disponible dans le tableau",
+							"oPaginate": {
+								"sFirst":      "Premier",
+								"sPrevious":   "Pr&eacute;c&eacute;dent",
+								"sNext":       "Suivant",
+								"sLast":       "Dernier"
+							},
+							"oAria": {
+								"sSortAscending":  ": activer pour trier la colonne par ordre croissant",
+								"sSortDescending": ": activer pour trier la colonne par ordre d&eacute;croissant"
+							}
+						
+					}
+			    } );
+			} );	
+	        </script>
+{% endblock %}

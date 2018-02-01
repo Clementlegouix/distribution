@@ -1,0 +1,37 @@
+security:
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        in_memory:
+            memory:
+                users:
+                    admin:
+                        password: P@ssword
+                        roles: 'ROLE_ADMIN'
+        our_db_provider:
+            entity:
+                class: App\Entity\User
+                property: username
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            anonymous: ~
+            form_login:
+                login_path: login
+                check_path: login
+            provider: our_db_provider
+            logout:
+                path:   /logout
+                target: /
+            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
+
+            # form_login: ~
+            # https://symfony.com/doc/current/security/form_login_setup.html
+    access_control:
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/register, roles: ROLE_ADMIN }
+
+    encoders:
+        App\Entity\User: bcrypt
+

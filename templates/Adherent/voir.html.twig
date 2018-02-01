@@ -1,0 +1,31 @@
+{# templates/adherent/voir.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Profile de {{ adherent.Prenom }} {{ adherent.Nom }}{% endblock %}
+
+{% block body %}
+
+	<div class="card" style="width: 30rem;">
+	  <div class="card-body">
+	    <h5 class="card-title">{{ adherent.Prenom }} {{ adherent.Nom }}</h5>
+	    <h6 class="card-subtitle mb-2 text-muted">N° carte étudiant {{ adherent.idCarte }}</h6>
+	    <h6 class="card-subtitle mb-2 text-muted">N° carte de passage {{ adherent.idDistri }}</h6>
+	    <p class="card-text">Ordre de passage <i data-feather="{{ adherent.ordrePassage }}"></i></p>
+	    <ul class="list-group list-group-flush">
+	    	{% for passage in adherent.passages %}
+	    		<li class="list-group-item">Passage le {{ passage.datePassage|date('d/m/Y à H:m:s') }} par {{ passage.user.username }}
+	    			<a href="{{ path('supprimerPassage', {'passage': passage.id }) }}"><i data-feather="trash-2"></i></a>
+	    		</li>
+	    	{% else %}
+	    		Pas de passages
+	    	{% endfor %}
+		  </ul>
+		<div class="card-body">
+			<a class="card-link" href="{{ path('adherent') }}"><i data-feather="rotate-ccw"></i>Retour</a>
+		    <a class="card-link" href="{{ path('supprimeradherent', {'adherent': adherent.id }) }}"><i data-feather="trash"></i>Supprimer</a>
+		    <a href="{{ path('editerAdherent', {'adherent': adherent.id }) }}" class="card-link"><i data-feather="edit"></i>Modifier</a>
+		</div>
+	  </div>
+	</div>
+{% endblock %}
