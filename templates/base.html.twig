@@ -30,7 +30,43 @@
 		      <div class="row">
 		        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
 		          <div class="sidebar-sticky">
-		          	{{ knp_menu_render('main', {'currentClass': 'active'})}}
+		          	{# {{ knp_menu_render('main', {'currentClass': 'active'})}} #}
+		          	<ul class="nav flex-column">
+		              <li class="nav-item">
+		                <a class="nav-link active" href="{{ path('home') }}">
+		                  <span data-feather="home"></span>
+		                  Distribution <span class="sr-only">(current)</span>
+		                </a>
+		              </li>
+		              {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+		              <li class="nav-item">
+		                <a class="nav-link" href="{{ path('home') }}">
+		                  <span data-feather="file"></span>
+		                  Adhérents
+		                </a>
+		              </li>
+		              {% if is_granted('ROLE_ADMIN') %}
+		              <li class="nav-item">
+		                <a class="nav-link" href="{{ path('home') }}">
+		                  <span data-feather="users"></span>
+		                  Bénévoles
+		                </a>
+		              </li>
+		              <li class="nav-item">
+		                <a class="nav-link" href="{{ path('home') }}">
+		                  <span data-feather="bar-chart-2"></span>
+		                  Rapports
+		                </a>
+		              </li>
+		              <li class="nav-item">
+		                <a class="nav-link" href="/admin">
+		                  <span data-feather="bar-chart-2"></span>
+		                  Administration
+		                </a>
+		              </li>
+		              {% endif %}
+		              {% endif %}
+		            </ul>
 		          </div>
 		        </nav>
 

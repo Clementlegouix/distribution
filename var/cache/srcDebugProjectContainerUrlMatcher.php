@@ -59,6 +59,11 @@ class srcDebugProjectContainerUrlMatcher extends Symfony\Bundle\FrameworkBundle\
                 return array (  '_controller' => 'App\\Controller\\AdherentController::CreerAdherent',  '_route' => 'creerAdherent',);
             }
 
+            // editerAdherent
+            if (0 === strpos($pathinfo, '/adherent/editer') && preg_match('#^/adherent/editer/(?P<adherent>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'editerAdherent')), array (  '_controller' => 'App\\Controller\\AdherentController::EditAdherent',));
+            }
+
             // VoirAdherent
             if (preg_match('#^/adherent/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
                 return $this->mergeDefaults(array_replace($matches, array('_route' => 'VoirAdherent')), array (  '_controller' => 'App\\Controller\\AdherentController::VoirAdherent',));
