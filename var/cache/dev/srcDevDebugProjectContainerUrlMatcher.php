@@ -94,6 +94,24 @@ class srcDevDebugProjectContainerUrlMatcher extends Symfony\Bundle\FrameworkBund
 
         }
 
+        elseif (0 === strpos($pathinfo, '/lo')) {
+            // loadAdherent
+            if ('/load' === $pathinfo) {
+                return array (  '_controller' => 'App\\Controller\\AdherentController::LoadAdherent',  '_route' => 'loadAdherent',);
+            }
+
+            // login
+            if ('/login' === $pathinfo) {
+                return array (  '_controller' => 'App\\Controller\\SecurityController::login',  '_route' => 'login',);
+            }
+
+            // logout
+            if ('/logout' === $pathinfo) {
+                return array('_route' => 'logout');
+            }
+
+        }
+
         // home
         if ('' === $trimmedPathinfo) {
             $ret = array (  '_controller' => 'App\\Controller\\HomeController::index',  '_route' => 'home',);
@@ -104,6 +122,24 @@ class srcDevDebugProjectContainerUrlMatcher extends Symfony\Bundle\FrameworkBund
             return $ret;
         }
 
+        if (0 === strpos($pathinfo, '/icon')) {
+            // icon
+            if ('/icon' === $pathinfo) {
+                return array (  '_controller' => 'App\\Controller\\IconController::index',  '_route' => 'icon',);
+            }
+
+            // creerIcon
+            if ('/icon/creer' === $pathinfo) {
+                return array (  '_controller' => 'App\\Controller\\IconController::Creer',  '_route' => 'creerIcon',);
+            }
+
+            // supprimerIcon
+            if (0 === strpos($pathinfo, '/icon/supprimer') && preg_match('#^/icon/supprimer/(?P<icon>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'supprimerIcon')), array (  '_controller' => 'App\\Controller\\IconController::delAdherent',));
+            }
+
+        }
+
         // user_registration
         if ('/register' === $pathinfo) {
             return array (  '_controller' => 'App\\Controller\\RegistrationController::registerAction',  '_route' => 'user_registration',);
@@ -112,16 +148,6 @@ class srcDevDebugProjectContainerUrlMatcher extends Symfony\Bundle\FrameworkBund
         // role
         if ('/role' === $pathinfo) {
             return array (  '_controller' => 'App\\Controller\\RoleController::index',  '_route' => 'role',);
-        }
-
-        // login
-        if ('/login' === $pathinfo) {
-            return array (  '_controller' => 'App\\Controller\\SecurityController::login',  '_route' => 'login',);
-        }
-
-        // logout
-        if ('/logout' === $pathinfo) {
-            return array('_route' => 'logout');
         }
 
         if (0 === strpos($pathinfo, '/benevoles')) {

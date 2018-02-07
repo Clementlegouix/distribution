@@ -18,8 +18,8 @@
 	        <thead>
 	            <tr>
 	            	<th scope="col">N° Distribution</th>
-	                <th scope="col">Nom</th>
-	                <th scope="col">Prénom</th>
+	                {# <th scope="col">Nom</th>
+	                <th scope="col">Prénom</th> #}
 	                <th scope="col">N° Carte étudiante</th>
 	                <th scope="col">Date de création</th>
 	                <th scope="col">Ordre</th>
@@ -36,11 +36,11 @@
 			        {% endif %}				
 			        
 			        	<td scope="row" class="align-middle">{{ adherent.iddistri }}</td>
-			        	<td>{{ adherent.nom }}</td>
-			        	<td>{{ adherent.prenom }}</td>
+			        	{# <td>{{ adherent.nom }}</td>
+			        	<td>{{ adherent.prenom }}</td> #}
 			        	<td>{{ adherent.idcarte }}</td>
 			        	<td>{{ adherent.datecreation|date('d/m/Y') }}</td>
-			        	<td><i data-feather="{{ adherent.ordrePassage }}"></i></td>
+			        	<td><image src="{{ asset('uploads/icon/' ~ adherent.IconPath ) }}" /></td>
 			        	<td>{{ adherent.getNbPassage }}</td>
 			        	<td>
 			        		<a href="{{ path('VoirAdherent', {'id': adherent.id }) }}"><i data-feather="edit"></i></a>&nbsp;&nbsp;

@@ -45,14 +45,15 @@ class Adherent
     private $datecreation;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $ordrePassage;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Passage", mappedBy="adherent")
      */
     private $passages;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Icon")
+     * @ORM\JoinColumn(name="icon_id", referencedColumnName="id")
+     */
+    private $icon;
 
 
     public function __construct()
@@ -128,38 +129,24 @@ class Adherent
         $this->datecreation = $datecreation;
     }
 
+    public function getIcon()
+    {
+        return $this->icon;
+    }
+
+    public function getIconPath()
+    {
+        return $this->icon->getImage();
+    }
+
+    public function setIcon($icon)
+    {
+        $this->icon = $icon;
+    }
+
     public function getNbPassage()
     {
         return count($this->passages);
-    }
-
-    public function setordrePassage($ordrePassage)
-    {
-        $this->ordrePassage = $ordrePassage;
-    }
-
-    public function getValueOrdrePassage()
-    {
-        return $this->ordrePassage;
-    }
-
-    public function getordrePassage()
-    {
-        //return $this->ordrePassage;
-        switch ($this->ordrePassage) {
-            case 0:
-                return "aperture";
-                break;
-            case 1:
-                return "trash";
-                break;
-            case 2:
-                return "trash-2";
-                break;
-            default:
-                return "circle";
-                break;
-        }
     }
 
     public function isCheckPassage()

@@ -11,10 +11,13 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Form\IconType;
 use App\Entity\Adherent;
 use App\Entity\Passage;
 use App\Entity\User;
+use App\Entity\Icon;
 
 class AdherentController extends Controller
 {
@@ -123,14 +126,14 @@ class AdherentController extends Controller
         
 
         $form = $this->createFormBuilder($adherent)
-            ->add('Nom', TextType::class, 
-                array ( 'attr'=> array(
-                        'class'=> 'form-control',
-                        'placeholder'=> 'Nom') ))
-            ->add('Prenom', TextType::class, 
-                array ( 'attr'=> array(
-                        'class'=> 'form-control',
-                        'placeholder'=> 'Prénom') ))
+            // ->add('Nom', TextType::class, 
+            //     array ( 'attr'=> array(
+            //             'class'=> 'form-control',
+            //             'placeholder'=> 'Nom') ))
+            // ->add('Prenom', TextType::class, 
+            //     array ( 'attr'=> array(
+            //             'class'=> 'form-control',
+            //             'placeholder'=> 'Prénom') ))
             ->add('Idcarte', TextType::class, 
                 array ( 'attr'=> array(
                         'class'=> 'form-control',
@@ -139,12 +142,17 @@ class AdherentController extends Controller
                 array ( 'attr'=> array(
                         'class'=> 'form-control',
                         'placeholder'=> 'N° de distribution') ))
-            ->add('ordrePassage',  ChoiceType::class, array(
-                                'choices'  => array(
-                                    '0' => 0,
-                                    '2' => 2,
-                                    '3' => 3,
-                                )))
+            ->add('Icon', EntityType::class, array(
+                    // looks for choices from this entity
+                    'class' => Icon::class,
+
+                    // uses the User.username property as the visible option string
+                    'choice_label' => 'nom',
+
+                    // used to render a select box, check boxes or radios
+                    // 'multiple' => true,
+                    // 'expanded' => true,
+                ))
             ->add('Enregistrer', SubmitType::class, 
                 array ( 'attr'=> array('class'=> 'btn btn-primary') ))
             ->getForm();
@@ -152,6 +160,9 @@ class AdherentController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $adherent = $form->getData();
+
+            $adherent->setNom(' ');
+            $adherent->setprenom(' ');
             $adherent->setDatecreation(new \Datetime());
             $adherent->setPassages(null);
             $em = $this->getDoctrine()->getManager();
@@ -183,14 +194,6 @@ class AdherentController extends Controller
         
 
         $form = $this->createFormBuilder($adherent)
-            ->add('Nom', TextType::class, 
-                array ( 'attr'=> array(
-                        'class'=> 'form-control',
-                        'placeholder'=> 'Nom')))
-            ->add('Prenom', TextType::class, 
-                array ( 'attr'=> array(
-                        'class'=> 'form-control',
-                        'placeholder'=> 'Prénom') ))
             ->add('Idcarte', TextType::class, 
                 array ( 'attr'=> array(
                         'class'=> 'form-control',
@@ -199,13 +202,10 @@ class AdherentController extends Controller
                 array ( 'attr'=> array(
                         'class'=> 'form-control',
                         'placeholder'=> 'N° de distribution') ))
-            ->add('ordrePassage',  ChoiceType::class, array(
-                                'choices'  => array(
-                                    '0' => 0,
-                                    '2' => 2,
-                                    '3' => 3,
-                                ),
-                                'data' => $adherent->getValueOrdrePassage()))
+            ->add('Icon', EntityType::class, array(
+                    'class' => Icon::class,
+                    'choice_label' => 'nom',
+                ))
             ->add('Enregistrer', SubmitType::class, 
                 array ( 'attr'=> array('class'=> 'btn btn-primary') ))
             ->getForm();
@@ -245,6 +245,48 @@ class AdherentController extends Controller
         }
 
         return $this->render('Adherent/voir.html.twig', array('adherent' => $adherent, 'passages' => $passages));
+    }
+
+    /**
+     * @Route("/load", name="loadAdherent")
+     */
+    public function LoadAdherent()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $adherents = $em->getRepository(Adherent::class)->findAll();
+
+        foreach ($adherents as $adherent) 
+        {
+            foreach ($adherent->getPassages() as $passage) 
+            {
+                $em->remove($passage);
+            }
+            $em->remove($adherent);
+        }
+        $em->flush();
+        
+        
+        return new Response('Action terminée !');
+    }
+
+    private function addAdherentLoader($start, $end, $icon)
+    {
+        for($i = $start ; $i < $end ; $i++)
+        {
+            $em = $this->getDoctrine()->getManager();
+            $adherent = new Adherent();
+            $adherent->setNom(' ');
+            $adherent->setprenom(' ');
+            $adherent->setidcarte('non renseigné');
+            $adherent->setiddistri($i.'-2017-2018');
+            $adherent->setDatecreation(new \Datetime());
+            $adherent->setPassages(null);
+            $adherent->setordrepassage($icon);
+
+            $em->persist($adherent);
+            $em->flush();
+
+        }
     }
 
 }

@@ -64,10 +64,10 @@ class Adherent extends \App\Entity\Adherent implements \Doctrine\ORM\Proxy\Proxy
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', '' . "\0" . 'App\\Entity\\Adherent' . "\0" . 'id', '' . "\0" . 'App\\Entity\\Adherent' . "\0" . 'nom', '' . "\0" . 'App\\Entity\\Adherent' . "\0" . 'prenom', '' . "\0" . 'App\\Entity\\Adherent' . "\0" . 'idcarte', '' . "\0" . 'App\\Entity\\Adherent' . "\0" . 'iddistri', '' . "\0" . 'App\\Entity\\Adherent' . "\0" . 'datecreation', '' . "\0" . 'App\\Entity\\Adherent' . "\0" . 'ordrePassage', '' . "\0" . 'App\\Entity\\Adherent' . "\0" . 'passages'];
+            return ['__isInitialized__', '' . "\0" . 'App\\Entity\\Adherent' . "\0" . 'id', '' . "\0" . 'App\\Entity\\Adherent' . "\0" . 'nom', '' . "\0" . 'App\\Entity\\Adherent' . "\0" . 'prenom', '' . "\0" . 'App\\Entity\\Adherent' . "\0" . 'idcarte', '' . "\0" . 'App\\Entity\\Adherent' . "\0" . 'iddistri', '' . "\0" . 'App\\Entity\\Adherent' . "\0" . 'datecreation', '' . "\0" . 'App\\Entity\\Adherent' . "\0" . 'passages', '' . "\0" . 'App\\Entity\\Adherent' . "\0" . 'icon'];
         }
 
-        return ['__isInitialized__', '' . "\0" . 'App\\Entity\\Adherent' . "\0" . 'id', '' . "\0" . 'App\\Entity\\Adherent' . "\0" . 'nom', '' . "\0" . 'App\\Entity\\Adherent' . "\0" . 'prenom', '' . "\0" . 'App\\Entity\\Adherent' . "\0" . 'idcarte', '' . "\0" . 'App\\Entity\\Adherent' . "\0" . 'iddistri', '' . "\0" . 'App\\Entity\\Adherent' . "\0" . 'datecreation', '' . "\0" . 'App\\Entity\\Adherent' . "\0" . 'ordrePassage', '' . "\0" . 'App\\Entity\\Adherent' . "\0" . 'passages'];
+        return ['__isInitialized__', '' . "\0" . 'App\\Entity\\Adherent' . "\0" . 'id', '' . "\0" . 'App\\Entity\\Adherent' . "\0" . 'nom', '' . "\0" . 'App\\Entity\\Adherent' . "\0" . 'prenom', '' . "\0" . 'App\\Entity\\Adherent' . "\0" . 'idcarte', '' . "\0" . 'App\\Entity\\Adherent' . "\0" . 'iddistri', '' . "\0" . 'App\\Entity\\Adherent' . "\0" . 'datecreation', '' . "\0" . 'App\\Entity\\Adherent' . "\0" . 'passages', '' . "\0" . 'App\\Entity\\Adherent' . "\0" . 'icon'];
     }
 
     /**
@@ -182,6 +182,17 @@ class Adherent extends \App\Entity\Adherent implements \Doctrine\ORM\Proxy\Proxy
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getPassages', []);
 
         return parent::getPassages();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setPassages($passages)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setPassages', [$passages]);
+
+        return parent::setPassages($passages);
     }
 
     /**
@@ -312,34 +323,34 @@ class Adherent extends \App\Entity\Adherent implements \Doctrine\ORM\Proxy\Proxy
     /**
      * {@inheritDoc}
      */
+    public function getIcon()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIcon', []);
+
+        return parent::getIcon();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setIcon($icon)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIcon', [$icon]);
+
+        return parent::setIcon($icon);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function getNbPassage()
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getNbPassage', []);
 
         return parent::getNbPassage();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setordrePassage($ordrePassage)
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setordrePassage', [$ordrePassage]);
-
-        return parent::setordrePassage($ordrePassage);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getordrePassage()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getordrePassage', []);
-
-        return parent::getordrePassage();
     }
 
     /**

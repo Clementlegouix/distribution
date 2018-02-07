@@ -2,6 +2,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: 'fr'
+    icon_directory: '%kernel.project_dir%/public/uploads/icon'
 
 services:
     # default configuration for services in *this* file
@@ -31,7 +32,6 @@ services:
         arguments: ["@knp_menu.factory"]
         tags:
             - { name: knp_menu.menu_builder, method: createMainMenu, alias: main } # The alias is what is used to retrieve the menu
-
 easy_admin:
     entities:
         - App\Entity\Adherent

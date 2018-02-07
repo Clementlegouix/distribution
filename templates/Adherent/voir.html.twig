@@ -2,16 +2,17 @@
 
 {% extends 'base.html.twig' %}
 
-{% block title %}Profile de {{ adherent.Prenom }} {{ adherent.Nom }}{% endblock %}
+{% block title %}{# Profile de {{ adherent.Prenom }} {{ adherent.Nom }} #}{% endblock %}
 
 {% block body %}
 
 	<div class="card" style="width: 30rem;">
 	  <div class="card-body">
-	    <h5 class="card-title">{{ adherent.Prenom }} {{ adherent.Nom }}</h5>
+	    {# <h5 class="card-title">{{ adherent.Prenom }} {{ adherent.Nom }}</h5> #}
 	    <h6 class="card-subtitle mb-2 text-muted">N° carte étudiant {{ adherent.idCarte }}</h6>
 	    <h6 class="card-subtitle mb-2 text-muted">N° carte de passage {{ adherent.idDistri }}</h6>
-	    <p class="card-text">Ordre de passage <i data-feather="{{ adherent.ordrePassage }}"></i></p>
+	    <p class="card-text">Ordre de passage</p> 
+	    <p class="card-text"><image src="{{ asset('uploads/icon/' ~ adherent.IconPath) }}" /></p>
 	    <ul class="list-group list-group-flush">
 	    	{% for passage in adherent.passages %}
 	    		<li class="list-group-item">Passage le {{ passage.datePassage|date('d/m/Y à H:m:s') }} par {{ passage.user.username }}
