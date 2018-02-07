@@ -38,11 +38,11 @@
 			        	<td scope="row" class="align-middle">{{ adherent.iddistri }}</td>
 			        	{# <td>{{ adherent.nom }}</td>
 			        	<td>{{ adherent.prenom }}</td> #}
-			        	<td>{{ adherent.idcarte }}</td>
-			        	<td>{{ adherent.datecreation|date('d/m/Y') }}</td>
-			        	<td><image src="{{ asset('uploads/icon/' ~ adherent.IconPath ) }}" /></td>
-			        	<td>{{ adherent.getNbPassage }}</td>
-			        	<td>
+			        	<td scope="row" class="align-middle">{{ adherent.idcarte }}</td>
+			        	<td scope="row" class="align-middle">{{ adherent.datecreation|date('d/m/Y') }}</td>
+			        	<td scope="row" class="align-middle"><image src="{{ asset('uploads/icon/' ~ adherent.IconPath ) }}" /></td>
+			        	<td scope="row" class="align-middle">{{ adherent.getNbPassage }}</td>
+			        	<td scope="row" class="align-middle">
 			        		<a href="{{ path('VoirAdherent', {'id': adherent.id }) }}"><i data-feather="edit"></i></a>&nbsp;&nbsp;
 			        		{% if adherent.CheckPassage %}
 			        		<a href="{{ path('ajouterPassage', {'adherent': adherent.id, 'user': app.user.id }) }}"><i data-feather="plus-circle"></i></a>
